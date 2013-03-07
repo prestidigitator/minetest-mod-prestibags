@@ -18,6 +18,8 @@ them, and they can potentially take damage from sources other than fire.  They
 will show wear like a tool when taken into inventory if they have taken any
 damage.
 
+Required Minetest Version: >=0.4.5
+
 Dependencies: default
 
 Soft Dependencies: wool (for crafting), fire
