@@ -412,3 +412,14 @@ minetest.register_tool(
       --    detached proxy that doesn't allow the bag's stack to be changed
       --    while open!
    })
+
+minetest.register_craft(
+   {
+      output = "prestibags:bag",
+      recipe =
+         {
+            { "",           "group:wool", "" },
+            { "group:wool", "",           "group:wool" },
+            { "group:wool", "group:wool", "group:wool" },
+         }
+   })

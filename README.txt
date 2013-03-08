@@ -1,7 +1,7 @@
 Prestibags Minetest Mod
 =======================
 
-Pretibags are simple bags that act like chests you can pick up.  They do not
+Prestibags are simple bags that act like chests you can pick up.  They do not
 modify the player's normal inventory formspec, so they will not interfere with
 any mods that do.  Here are some of their features:
 
@@ -20,9 +20,9 @@ damage.
 
 Required Minetest Version: >=0.4.5
 
-Dependencies: default
+Dependencies: (none)
 
-Soft Dependencies: wool (for crafting), fire
+Soft Dependencies: default, wool (for crafting), fire
 
 Craft Recipies (W = "group:wool"):
    — W —
@@ -36,7 +36,7 @@ Change History
 
 Version 1.0
 
-* Released 2013-03-07
+* Released 2013-03-07.
 * First working version.
 
 
