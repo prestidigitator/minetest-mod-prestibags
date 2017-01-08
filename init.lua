@@ -20,6 +20,9 @@ local OPEN_BAG_SOUND = "prestibags_rustle_bag"
 local OPEN_BAG_SOUND_GAIN = 1.0
 local OPEN_BAG_SOUND_DIST = 5.0
 
+-- Use mesed bag or cubic one with 16px texture
+local MESHED_BAG = false
+
 --- HP of undamaged bag (integer >0).
 local BAG_MAX_HP = 4
 
@@ -53,6 +56,26 @@ local BURN_DAMAGE__HP = 1
 
 local EPSILON = 0.001  -- "close enough"
 
+-- Textures and bag
+local bag_texture_inv
+local bag_texture_wield
+local bag_properties = {}
+
+if MESHED_BAG then
+	bag_texture_inv 	= "prestibags_bag_inv.png"
+	bag_texture_wield	= "prestibags_bag_wield.png"
+    bag_properties.visual = "mesh"
+    bag_properties.visual_size = { x = 1, y = 1 }
+    bag_properties.mesh = "prestibags_bag.obj"
+    bag_properties.textures = { "prestibags_bag.png" }
+else
+	bag_texture_inv 	= "prestibags_bag_small.png"
+	bag_texture_wield	= "prestibags_bag_small.png"
+	bag_properties.visual = "sprite"
+    bag_properties.visual_size = { x = 0.9, y = 1 }
+    bag_properties.mesh = nil
+    bag_properties.textures = {"prestibags_bag_small.png"}
+end
 
 local function serializeContents(contents)
    if not contents then return "" end
@@ -159,10 +182,10 @@ minetest.register_entity(
             hp_max = BAG_MAX_HP,
             physical = false,
             collisionbox = { -0.44, -0.5, -0.425, 0.44, 0.35, 0.425 },
-            visual = "mesh",
-            visual_size = { x = 1, y = 1 },
-            mesh = "prestibags_bag.obj",
-            textures = { "prestibags_bag.png" }
+            visual = bag_properties.visual,
+            visual_size = bag_properties.visual_size,
+            mesh = bag_properties.mesh,
+            textures = bag_properties.textures,
          },
 
       on_activate = function(self, staticData, dt)
@@ -228,7 +251,8 @@ minetest.register_entity(
 
          local formspec =
             "size["..w..","..h.."]"..
-            "image[1,"..yImg..";1,1;prestibags_bag_inv.png]"..
+            default.gui_bg_img.. 
+            "image[1,"..yImg..";1,1;"..bag_texture_inv.."]"..
             "list[detached:prestibags:bags;"..self.id..";2,0;"..
                   BAG_WIDTH..","..BAG_HEIGHT..";]"..
             "list[current_player;main;0,"..yPlay..";8,4;]"
@@ -384,8 +408,8 @@ minetest.register_tool(
    {
       description = "Bag of Stuff",
       groups = { bag = BAG_WIDTH*BAG_HEIGHT, flammable = 1 },
-      inventory_image = "prestibags_bag_inv.png",
-      wield_image = "prestibags_bag_wield.png",
+      inventory_image = bag_texture_inv,
+      wield_image = bag_texture_wield,
       stack_max = 1,
 
       on_place = function(stack, player, pointedThing)
